@@ -24,7 +24,7 @@ class Player:
         self.image_running2 = pygame.image.load("images/adventurer_action2.png")
 
         self.image = self.image_idle
-        self.rect = self.image.get_rect()  # Mät spelarens gränser.
+        self.rect = self.image.get_rect()  # Mät spelarens 'hitbox'.
 
         self._spawn()
 
@@ -46,6 +46,8 @@ class Player:
                 self.speed = 0
                 self.is_jumping = False
                 self.image = self.image_running1
+                # Se till att spelaren inte hamnar under marken..s
+                self._spawn()
         else:
             if self.step % 2 == 0:
                 self.image = self.image_running1
@@ -53,7 +55,7 @@ class Player:
                 self.image = self.image_running2
 
     def jump(self):
-        """Spelaren innleder ett hopp."""
+        """Spelaren inleder ett hopp."""
         self.speed = self.jump_height
         self.is_jumping = True
 
