@@ -4,6 +4,7 @@ import pygame
 
 from settings import Settings
 from player import Player
+from obstacle import Obstacle
 
 
 class DuckAndJump:
@@ -18,16 +19,19 @@ class DuckAndJump:
         pygame.display.set_caption("Duck and Jump")
 
         self.player = Player(self)
+        self.obstacle = Obstacle(self)
 
     def run_game(self):
         while True:
             self._check_events()
+            self.obstacle.update()
             self.player.update()
             self._update_screen()
 
     def _update_screen(self):
         """Updaterar skärmen of 'flippar' till en ny skärm."""
         self.screen.fill(self.settings.bg_color)
+        self.obstacle.blitme()
         self.player.blitme()
 
         pygame.display.flip()

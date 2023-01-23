@@ -7,3 +7,5 @@ class Settings:
         self.player_gravity = 0.1
         self.player_speed = 0
         self.player_jump_height = -6
+
+        self.obstacle_speed = 0.5
