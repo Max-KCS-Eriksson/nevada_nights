@@ -1,3 +1,6 @@
+import pygame
+
+
 class Settings:
     def __init__(self) -> None:
         self.screen_width = 700
@@ -12,3 +15,6 @@ class Settings:
         self.obstacle_respawn_rate = (
             -500
         )  # Hur långt utanför vänsterkant innan ny kommer.
+
+        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
+        self.screen_rect = self.screen.get_rect()

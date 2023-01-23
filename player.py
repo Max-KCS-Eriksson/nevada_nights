@@ -4,7 +4,7 @@ from settings import Settings
 
 
 class Player:
-    def __init__(self, game) -> None:
+    def __init__(self) -> None:
         self.settings = Settings()
         self.gravity = self.settings.player_gravity
         self.speed = self.settings.player_speed
@@ -12,8 +12,8 @@ class Player:
         self.is_jumping = False
         self.step = 0  # Används för att alternera image_running1 och image_running2.
 
-        self.screen = game.screen
-        self.screen_rect = game.screen.get_rect()
+        self.screen = self.settings.screen
+        self.screen_rect = self.settings.screen_rect
 
         self.image_idle = pygame.image.load("images/adventurer_idle.png")
         self.image_jumping = pygame.image.load("images/adventurer_jump.png")

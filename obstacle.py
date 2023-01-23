@@ -4,12 +4,12 @@ from settings import Settings
 
 
 class Obstacle:
-    def __init__(self, game) -> None:
+    def __init__(self) -> None:
         self.settings = Settings()
         self.speed = self.settings.obstacle_speed
 
-        self.screen = game.screen
-        self.screen_rect = game.screen.get_rect()
+        self.screen = self.settings.screen
+        self.screen_rect = self.settings.screen_rect
 
         self.image = pygame.image.load("images/cactus.png")
         self.rect = self.image.get_rect()

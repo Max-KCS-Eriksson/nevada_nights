@@ -12,14 +12,12 @@ class DuckAndJump:
         pygame.init()
 
         self.settings = Settings()
-        self.screen = pygame.display.set_mode(
-            (self.settings.screen_width, self.settings.screen_height)
-        )
+        self.screen = self.settings.screen
 
         pygame.display.set_caption("Duck and Jump")
 
-        self.player = Player(self)
-        self.obstacle = Obstacle(self)
+        self.player = Player()
+        self.obstacle = Obstacle()
 
     def run_game(self):
         while True:
