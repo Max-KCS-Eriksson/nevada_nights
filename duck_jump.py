@@ -18,11 +18,15 @@ class DuckAndJump:
         # Spelets inställningar och skärm.
         self.settings = Settings()
         self.screen = self.settings.screen
+        self.screen_rect = self.settings.screen_rect
         pygame.display.set_caption("Duck and Jump")  # Titel på spelets fönster.
 
-        # Spelets spelare och hinder.
+        # Isntansiera spelets spelare.
         self.player = Player()
-        self.ground_obstacle = GroundObstacle()
+
+        # Skapa grupp med instanser av spelets hinder.
+        self.obstacles = pygame.sprite.Group()  # Hantera en mängd hinder samtidigt.
+        self._create_obstacles()
 
     def run_game(self):
         """Spelets körning."""
@@ -32,7 +36,7 @@ class DuckAndJump:
 
             # Uppdatera spelaren och hindren.
             self.player.update()
-            self.ground_obstacle.update()
+            self._update_obstacles()
 
             # Uppdatera skärmen.
             self._update_screen()
@@ -42,10 +46,29 @@ class DuckAndJump:
         # Rita spelets bakgrund och element.
         self.screen.fill(self.settings.bg_color)
         self.player.blitme()
-        self.ground_obstacle.blitme()
+        self.obstacles.draw(self.screen)  # Rita hela gruppen hinder.
 
         # 'Flippa' till en ny bild.
         pygame.display.flip()
+
+    def _create_obstacles(self):
+        obstacle = GroundObstacle()
+        self.obstacles.add(obstacle)
+
+    def _update_obstacles(self):
+        self.obstacles.update()
+
+        # Ta bort hinder som har passerat ut från spelskärmen.
+        for obstacle in self.obstacles.copy():
+            if obstacle.rect.right <= self.screen_rect.left:
+                self.obstacles.remove(obstacle)
+
+        self._check_obstacles()
+
+    def _check_obstacles(self):
+        # Skapa fler hinder om det inte finns några.
+        if not self.obstacles:
+            self._create_obstacles()
 
     def _check_events(self):
         """Kolla efter tangentbords- och mushändelser."""

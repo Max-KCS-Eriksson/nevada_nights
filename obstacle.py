@@ -3,9 +3,21 @@ import pygame
 from settings import Settings
 
 
-class GroundObstacle:
+class GroundObstacle(pygame.sprite.Sprite):
+    """Ett hinder som ärver metoder från Sprite-klassen."""
+
     def __init__(self):
-        """Instansiera hindret och dess förutsättningar."""
+        """
+        Instansiera hindret med ärvda metoder från förälderklassen, samt hindrets
+        förutsättningar.
+
+        De ärvda metoderna möjliggör att instanser av klassen kan hanteras i "sprit.Group",
+        som är ett listliknande objekt med metoder för att hantera flera tillgångar
+        samtidigt.
+        """
+        # Ärv egenskaper.
+        super().__init__()
+
         self.settings = Settings()
         self.speed = self.settings.obstacle_speed
         self._respawn_rate = self.settings.obstacle_respawn_rate
@@ -29,10 +41,6 @@ class GroundObstacle:
         # Förflytta i vänster riktning.
         self.rect.x -= self.speed
 
-        # Kolla om hindret är utanför spelplanen.
-        if self._is_out():
-            self._spawn()
-
     def _spawn(self):
         """
         Placera hindret utanför nedre högra hörnet av spelskärmen.
@@ -42,14 +50,3 @@ class GroundObstacle:
         # Packa upp det oföränderliga tuple-värdet och addera värdet av _respawn_rate.
         screen_right, screen_bottom = self.screen_rect.bottomright
         self.rect.bottomleft = (screen_right + self._respawn_rate, screen_bottom)
-
-    def _is_out(self):
-        """
-        Kolla om hindret har passerat ut från spelskärmen.
-
-        Returnerar booleskt värde.
-        """
-        if self.rect.right <= self.screen_rect.left:
-            return True
-
-        return False
