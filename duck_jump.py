@@ -62,10 +62,13 @@ class DuckAndJump:
     def _update_obstacles(self):
         self.obstacles.update()
 
-        # Ta bort hinder som har passerat ut från spelskärmen.
+        # Kolla efter hinder som har passerat ut från spelskärmen.
         for obstacle in self.obstacles.copy():
             if obstacle.rect.right <= self.screen_rect.left:
+                # Ta bort hinderinstansen från gruppen av hinder.
                 self.obstacles.remove(obstacle)
+                # Inkrementera poängstatistiken.
+                self.stats.score += self.settings.obstacle_points
 
         self._check_obstacles()
 

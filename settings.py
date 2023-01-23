@@ -13,13 +13,14 @@ class Settings:
         self.player_lives_max = 3
         self.player_gravity = 0.075
         self.player_speed = 0
-        self.player_jump_height = -7.75
+        self.player_jump_height = -8
 
         # Hindrets inställningar.
         self.obstacle_speed = 1.5  # Måste vara över 1 annars kan inte x bli lägre än 0.
         self.obstacle_respawn_rate = (
             500  # Avstånd utanför högerkant nytt hinder skapas.
         )
+        self.obstacle_points = 100
 
         self._create_screen()
 
