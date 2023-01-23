@@ -7,7 +7,7 @@ class Player:
     def __init__(self, game) -> None:
         self.settings = Settings()
         self.gravity = self.settings.player_gravity
-        self.speed = self.settings.player_gravity
+        self.speed = self.settings.player_speed
         self.jump_height = self.settings.player_jump_height
         self.is_jumping = False
         self.step = 0  # Används för att alternera image_running1 och image_running2.
