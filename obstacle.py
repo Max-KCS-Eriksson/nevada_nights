@@ -37,9 +37,11 @@ class GroundObstacle:
         """
         Placera hindret utanför nedre högra hörnet av spelskärmen.
 
-        Avståndet utanför hörnet bestämms av det privata attributet ._respawn_rate.
+        Avståndet utanför hörnet bestämms av det privata attributet _respawn_rate.
         """
-        self.rect.bottomleft = self.screen_rect.bottomright + self._respawn_rate
+        # Packa upp det oföränderliga tuple-värdet och addera värdet av _respawn_rate.
+        screen_right, screen_bottom = self.screen_rect.bottomright
+        self.rect.bottomleft = (screen_right + self._respawn_rate, screen_bottom)
 
     def _is_out(self):
         """
@@ -47,7 +49,7 @@ class GroundObstacle:
 
         Returnerar booleskt värde.
         """
-        if self.rect.right <= self.screen.left:
+        if self.rect.right <= self.screen_rect.left:
             return True
 
         return False
