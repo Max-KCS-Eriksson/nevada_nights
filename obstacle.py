@@ -3,7 +3,7 @@ import pygame
 from settings import Settings
 
 
-class Obstacle:
+class GroundObstacle:
     def __init__(self):
         """Instansiera hindret och dess förutsättningar."""
         self.settings = Settings()

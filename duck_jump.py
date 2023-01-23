@@ -4,7 +4,7 @@ import pygame
 
 from settings import Settings
 from player import Player
-from obstacle import Obstacle
+from obstacle import GroundObstacle
 
 
 class DuckAndJump:
@@ -22,7 +22,7 @@ class DuckAndJump:
 
         # Spelets spelare och hinder.
         self.player = Player()
-        self.obstacle = Obstacle()
+        self.ground_obstacle = GroundObstacle()
 
     def run_game(self):
         """Spelets körning."""
@@ -32,7 +32,7 @@ class DuckAndJump:
 
             # Uppdatera spelaren och hindren.
             self.player.update()
-            self.obstacle.update()
+            self.ground_obstacle.update()
 
             # Uppdatera skärmen.
             self._update_screen()
@@ -42,7 +42,7 @@ class DuckAndJump:
         # Rita spelets bakgrund och element.
         self.screen.fill(self.settings.bg_color)
         self.player.blitme()
-        self.obstacle.blitme()
+        self.ground_obstacle.blitme()
 
         # 'Flippa' till en ny bild.
         pygame.display.flip()
