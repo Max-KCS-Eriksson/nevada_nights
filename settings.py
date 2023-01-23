@@ -10,6 +10,7 @@ class Settings:
         self.bg_color = (60, 0, 80)
 
         # Spelarens inställningar.
+        self.player_lives_max = 3
         self.player_gravity = 0.075
         self.player_speed = 0
         self.player_jump_height = -7.75
