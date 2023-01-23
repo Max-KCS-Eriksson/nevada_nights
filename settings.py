@@ -8,4 +8,7 @@ class Settings:
         self.player_speed = 0
         self.player_jump_height = -6
 
-        self.obstacle_speed = 0.5
+        self.obstacle_speed = 1  # Måste vara heltal annars kan inte x bli lägre än 0.
+        self.obstacle_respawn_rate = (
+            -500
+        )  # Hur långt utanför vänsterkant innan ny kommer.

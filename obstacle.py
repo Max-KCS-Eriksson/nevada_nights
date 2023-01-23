@@ -14,11 +14,14 @@ class Obstacle:
         self.image = pygame.image.load("images/cactus.png")
         self.rect = self.image.get_rect()
 
-        # Placera hindret i nedre högra hörnet.
-        self.rect.bottomright = self.screen_rect.bottomright
+        # Placera hindret i utanför nedre högra hörnet av spelskärmen.
+        self.rect.bottomleft = self.screen_rect.bottomright
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
 
     def update(self):
-        pass
+        self.rect.x -= self.speed
+
+        if self.rect.x <= self.settings.obstacle_respawn_rate:
+            self.rect.bottomleft = self.screen_rect.bottomright
