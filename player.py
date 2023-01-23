@@ -52,9 +52,6 @@ class Player:
             else:
                 self.image = self.image_running2
 
-        # Uppdatera spelarens gränser, i det fall att spelaren hoppar eller duckar.
-        self.rect = self.image.get_rect()
-
     def jump(self):
         """Spelaren innleder ett hopp."""
         self.speed = self.jump_height
