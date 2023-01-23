@@ -3,6 +3,7 @@ import sys
 import pygame
 
 from settings import Settings
+from gamestats import GameStats
 from player import Player
 from obstacle import GroundObstacle
 
@@ -21,7 +22,10 @@ class DuckAndJump:
         self.screen_rect = self.settings.screen_rect
         pygame.display.set_caption("Duck and Jump")  # Titel på spelets fönster.
 
-        # Isntansiera spelets spelare.
+        # Instansiera spelets statistik.
+        self.stats = GameStats(self)
+
+        # Instansiera spelets spelare.
         self.player = Player()
 
         # Skapa grupp med instanser av spelets hinder.
@@ -69,6 +73,11 @@ class DuckAndJump:
         # Skapa fler hinder om det inte finns några.
         if not self.obstacles:
             self._create_obstacles()
+
+        # Kolla efter kollision med spelaren.
+        if pygame.sprite.spritecollideany(self.player, self.obstacles):
+            # Agera på kollision.
+            self.stats.reset_stats()
 
     def _check_events(self):
         """Kolla efter tangentbords- och mushändelser."""
