@@ -1,4 +1,5 @@
 import sys
+from time import sleep
 
 import pygame
 
@@ -92,6 +93,8 @@ class DuckAndJump:
             if self.stats.player_lives_left > 0:
                 # Subtrahera ett liv från spelaren.
                 self.stats.player_lives_left -= 1
+                # Fördröj start av nästa runda.
+                sleep(0.5)
             # Spelaren har inte liv kvar.
             else:
                 # Nollställ dynamisk spelstatistik.
