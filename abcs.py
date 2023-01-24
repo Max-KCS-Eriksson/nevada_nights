@@ -5,7 +5,7 @@ from settings import Settings
 
 class AbstractBaseGameElement:
     """
-    En abstract basklass.
+    En abstract basklass som enkapsulerar vanligt förekommande attribut och metoder.
 
     Används för att reducera kodduplicering genom att låta andra klasser för spelelement
     ärva från denna klass.
