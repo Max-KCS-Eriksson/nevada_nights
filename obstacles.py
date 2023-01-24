@@ -1,9 +1,10 @@
 import pygame
+from pygame.sprite import Sprite
 
-from settings import Settings
+from abcs import BaseObstacle
 
 
-class GroundObstacle(pygame.sprite.Sprite):
+class GroundObstacle(BaseObstacle, Sprite):
     """Ett hinder som ärver metoder från Sprite-klassen."""
 
     def __init__(self):
@@ -15,39 +16,21 @@ class GroundObstacle(pygame.sprite.Sprite):
         som är ett listliknande objekt med metoder för att hantera flera tillgångar
         samtidigt.
         """
-        # Ärv egenskaper.
-        super().__init__()
-
-        self.settings = Settings()
-        self.speed = self.settings.obstacle_speed
-        self._respawn_rate = self.settings.obstacle_respawn_rate
-
-        # Spelplanens gränser.
-        self.screen = self.settings.screen
-        self.screen_rect = self.settings.screen_rect
-
         # Ladda hindrets bild.
         self.image = pygame.image.load("images/cactus.png")
 
-        # Mät hindrets utkant, och skapa en 'hitbox' som är mindre än utkanten.
-        self.rect = self.image.get_rect()
-        hitbox_width = self.rect.width / 2
-        hitbox_height = self.rect.height / 2
-        self.hitbox = self.rect.inflate(-hitbox_width, -hitbox_height)
+        # Kalla på båda förälderklassers __init__() metod.
+        # Viktigt få om "super().__init__()" används så åkallas endast den förstnämnde
+        # förälderns metod om båda klasser har metoder med samma namn.
+        # Detta pga MRO (Method Resolution Order) i Python.
+        BaseObstacle.__init__(self)
+        Sprite.__init__(self)
+
+        # Ladda inställningar.
+        self.speed = self.settings.obstacle_speed
+        self._respawn_rate = self.settings.obstacle_respawn_rate
 
         self._spawn()
-
-    def blitme(self):
-        """Ritar sig på skärmen."""
-        self.screen.blit(self.image, self.rect)
-
-    def update(self):
-        """Updaterar sin position."""
-        # Förflytta i vänster riktning.
-        self.rect.x -= self.speed
-
-        # Centrera 'hitbox'.
-        self.hitbox.center = self.rect.center
 
     def _spawn(self):
         """
