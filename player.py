@@ -1,7 +1,6 @@
 import pygame
 
 from abcs import AbstractBaseGameElement
-from settings import Settings
 
 
 class Player(AbstractBaseGameElement):
@@ -26,7 +25,7 @@ class Player(AbstractBaseGameElement):
         # Ärv egenskaper.
         super().__init__()
 
-        # Ladda spelarens inställningar
+        # Ladda spelarens inställningar.
         self.gravity = self.settings.player_gravity
         self.speed = self.settings.player_speed
         self.jump_height = self.settings.player_jump_height
