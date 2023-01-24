@@ -12,5 +12,5 @@ class GameStats:
 
     def reset_stats(self):
         """Nollställ dynamiska attribut."""
-        self.player_lives_left = self.settings.player_lives_max
+        self.player_lives_left = self.settings.player_lives_max - 1  # Off-by-one.
         self.score = 0
