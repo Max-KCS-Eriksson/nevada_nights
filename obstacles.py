@@ -5,7 +5,7 @@ from abcs import BaseObstacle
 
 
 class GroundObstacle(BaseObstacle, Sprite):
-    """Ett hinder som ärver metoder från Sprite-klassen."""
+    """Ett hinder som ärver metoder från abcs.BaseObstacle och Sprite-klassen."""
 
     def __init__(self):
         """
@@ -15,6 +15,8 @@ class GroundObstacle(BaseObstacle, Sprite):
         De ärvda metoderna möjliggör att instanser av klassen kan hanteras i "sprit.Group",
         som är ett listliknande objekt med metoder för att hantera flera tillgångar
         samtidigt.
+
+        Åkallar båda föräldrarnas __init__() metoder.
         """
         # Ladda hindrets bild.
         self.image = pygame.image.load("images/cactus.png")
