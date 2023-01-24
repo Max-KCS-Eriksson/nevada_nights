@@ -1,7 +1,5 @@
 """En modul för abstrakta classer."""
 
-from settings import Settings
-
 
 class AbstractBaseGameElement:
     """
@@ -20,7 +18,6 @@ class AbstractBaseGameElement:
             "pygame.image.load()" som värde. Detta då attributet "rect" får sitt värde
             från "image" attributets ".get_rect()" metod.
         """
-        self.settings = Settings()
         # Spelplanens gränser.
         self.screen = self.settings.screen
         self.screen_rect = self.settings.screen_rect
