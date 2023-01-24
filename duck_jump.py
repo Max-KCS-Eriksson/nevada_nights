@@ -8,7 +8,7 @@ from gamestats import GameStats
 from scoreboard import Scoreboard
 from button import Button
 from player import Player
-from obstacles import GroundObstacle
+from obstacles import GroundObstacle, AirObstacle
 
 
 class DuckAndJump:
@@ -90,7 +90,12 @@ class DuckAndJump:
     def _create_obstacles(self):
         """Skapa och lägg till hinder i list attributet self.obstacles."""
         for obstacle_number in range(self.settings.obstacles_per_level):
-            obstacle = GroundObstacle()
+            # Avgör vilket typ av hinder som ska läggas till.
+            if obstacle_number % 2 == 0:
+                obstacle = GroundObstacle()
+            else:
+                obstacle = AirObstacle()
+
             # Skapa längre distans åt höger från spelskärmens kant ju senare index i
             # listan hindret har.
             obstacle.rect.left += obstacle.respawn_rate * obstacle_number * 2
