@@ -113,7 +113,6 @@ class DuckAndJump:
 
         # Uppdatera poängen på 'score board'.
         self.scoreboard.prep_score()
-        self.scoreboard.check_high_score()
 
     def _check_obstacles_collisions(self):
         """Kolla efter kollisioner mellan spelare och hinder."""
@@ -130,7 +129,7 @@ class DuckAndJump:
                 self.stats.player_lives_left -= 1
                 # Fördröj start av nästa runda.
                 sleep(0.5)
-            # Spelaren har inte liv kvar.
+            # Spelaren har inga liv kvar.
             else:
                 # Deaktivera spelet och återställ muspekaren.
                 self.stats.game_active = False
