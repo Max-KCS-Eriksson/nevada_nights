@@ -19,15 +19,16 @@ class AbstractBaseGameElement:
             Initiera efter att ett "image" attribut har deklarerats med
             "pygame.image.load()" som värde. Detta då attributet "rect" får sitt värde
             från "image" attributets ".get_rect()" metod.
+            Deklarera specifika inställnings attribut efter super().__init__().
         """
-        # Ladda spelarens inställningar
+        # Ladda inställningar.
         self.settings = Settings()
 
         # Spelplanens gränser.
         self.screen = self.settings.screen
         self.screen_rect = self.settings.screen_rect
 
-        # Mät spelarens utkant, och skapa en 'hitbox' som är mindre än utkanten.
+        # Mät spelelementets utkant, och skapa en 'hitbox' som är mindre än utkanten.
         self.rect = self.image.get_rect()
         hitbox_width = self.rect.width / 2
         hitbox_height = self.rect.height / 2
