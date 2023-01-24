@@ -1,21 +1,26 @@
 import pygame
 
+from abcs import AbstractBaseGameElement
 from settings import Settings
 
 
-class Player:
+class Player(AbstractBaseGameElement):
+    """
+    Hanterar spelaren och dess resurser.
+
+    Ärver metoder och attribut från abcs.AbstractBaseGameElement och utökar dess
+    funktionalitet.
+    """
+
     def __init__(self):
         """Instansiera spelaren och dennes förutsättningar."""
+        # Ladda spelarens inställningar
         self.settings = Settings()
         self.gravity = self.settings.player_gravity
         self.speed = self.settings.player_speed
         self.jump_height = self.settings.player_jump_height
         self.is_jumping = False  # Flaggvariabel för att påbörja ett hopp.
         self.step = 0  # Används för att alternera image_running1 och image_running2.
-
-        # Spelplanens gränser.
-        self.screen = self.settings.screen
-        self.screen_rect = self.settings.screen_rect
 
         # Ladda spelarens bilder.
         self.image_idle = pygame.image.load("images/adventurer_idle.png")
@@ -25,22 +30,14 @@ class Player:
 
         self.image = self.image_idle
 
-        # Mät spelarens utkant, och skapa en 'hitbox' som är mindre än utkanten.
-        self.rect = self.image.get_rect()
-        hitbox_width = self.rect.width / 2
-        hitbox_height = self.rect.height / 2
-        self.hitbox = self.rect.inflate(-hitbox_width, -hitbox_height)
+        # Ärv egenskaper.
+        super().__init__()
 
         self._spawn()
 
-    def blitme(self):
-        """Ritar sig på skärmen."""
-        self.screen.blit(self.image, self.rect)
-        # self.screen.fill((0, 125, 255), self.hitbox)  # NOTE Used for DEBUG only.
-
     def update(self):
-        """Updaterar sin position."""
-        self.step += 1  # TODO Find better solution.
+        """Uppdaterar sin position."""
+        self.step += 1
 
         if self.is_jumping:
             self.image = self.image_jumping
@@ -60,8 +57,8 @@ class Player:
             else:
                 self.image = self.image_running2
 
-        # Centrera 'hitbox'.
-        self.hitbox.center = self.rect.center
+        # Förläng med förälderns metod.
+        super().update()
 
     def jump(self):
         """Spelaren inleder ett hopp."""

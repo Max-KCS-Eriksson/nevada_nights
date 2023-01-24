@@ -31,6 +31,7 @@ class AbstractBaseGameElement:
     def blitme(self):
         """Ritar sig på skärmen."""
         self.screen.blit(self.image, self.rect)
+        # self.screen.fill((0, 125, 255), self.hitbox)  # NOTE Used for DEBUG only.
 
     def update(self):
         """
