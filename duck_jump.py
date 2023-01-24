@@ -63,6 +63,7 @@ class DuckAndJump:
         # Nollställ spelets statistik.
         self.stats.reset_stats()
         self.scoreboard.prep_score()
+        self.scoreboard.prep_player_lives()
 
         # Ta bort alla hinder.
         self.obstacles.empty()
@@ -127,6 +128,9 @@ class DuckAndJump:
             if self.stats.player_lives_left > 0:
                 # Subtrahera ett liv från spelaren.
                 self.stats.player_lives_left -= 1
+                # Uppdatera poängtavlan.
+                self.scoreboard.prep_player_lives()
+
                 # Fördröj start av nästa runda.
                 sleep(0.5)
             # Spelaren har inga liv kvar.

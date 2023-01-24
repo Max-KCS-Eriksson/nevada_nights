@@ -1,4 +1,4 @@
-import pygame.font
+import pygame
 
 
 class Scoreboard:
@@ -6,6 +6,7 @@ class Scoreboard:
 
     def __init__(self, game):
         """Instansiera attribut för poängräkning."""
+        self.game = game
         self.screen = game.screen
         self.screen_rect = self.screen.get_rect()
         self.settings = game.settings
@@ -18,6 +19,7 @@ class Scoreboard:
         # Förbered den initiala poängtavlan.
         self.prep_score()
         self.prep_high_score()
+        self.prep_player_lives()
 
     def prep_score(self):
         """Formatera poängen och rendera det som en bild."""
@@ -60,7 +62,24 @@ class Scoreboard:
             # Kalla på metod för att skriva 'high score' till fil.
             self.stats.write_high_score(self.stats.high_score)
 
+    def prep_player_lives(self):
+        """Visa hur många liv spelaren har kvar."""
+        # Formatera sträng, och väg upp fär off-by-one
+        player_lives_left_str = "Lives: {}".format(self.stats.player_lives_left + 1)
+
+        # Rendera stängvärde som bild.
+        self.player_lives_left_image = self.font.render(
+            player_lives_left_str, True, self.text_color, self.settings.bg_color
+        )
+
+        # Placera i vänstra hörnet.
+        self.player_lives_left_rect = self.high_score_image.get_rect()
+        self.player_lives_left_rect.left = self.screen_rect.left + 20
+        # Matcha den övre marginalen med poängräkningens.
+        self.player_lives_left_rect.top = self.score_rect.top
+
     def show_score(self):
         """Visa nuvarande poäng och 'high score'."""
         self.screen.blit(self.score_image, self.score_rect)
         self.screen.blit(self.high_score_image, self.high_score_rect)
+        self.screen.blit(self.player_lives_left_image, self.player_lives_left_rect)
