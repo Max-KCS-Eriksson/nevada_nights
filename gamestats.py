@@ -10,6 +10,11 @@ class GameStats:
         self.settings = game.settings
         self.reset_stats()
 
+        self.high_score = 0
+
+        # Start spelet med inaktivt status.
+        self.game_active = False
+
     def reset_stats(self):
         """Nollställ dynamiska attribut."""
         self.player_lives_left = self.settings.player_lives_max - 1  # Off-by-one.

@@ -5,6 +5,8 @@ import pygame
 
 from settings import Settings
 from gamestats import GameStats
+from scoreboard import Scoreboard
+from button import Button
 from player import Player
 from obstacle import GroundObstacle
 
@@ -25,6 +27,9 @@ class DuckAndJump:
 
         # Instansiera spelets statistik.
         self.stats = GameStats(self)
+        self.scoreboard = Scoreboard(self)
+
+        self.scoreboard.prep_score()
 
         # Instansiera spelets spelare.
         self.player = Player()
@@ -33,18 +38,37 @@ class DuckAndJump:
         self.obstacles = pygame.sprite.Group()  # Hantera en mängd hinder samtidigt.
         self._create_obstacles()
 
+        # Instansiera knapp för att starta spelet.
+        self.play_button = Button(self, "PLAY")
+
     def run_game(self):
         """Spelets körning."""
         while True:
             # Kolla efter input från användaren.
             self._check_events()
 
-            # Uppdatera spelaren och hindren.
-            self.player.update()
-            self._update_obstacles()
+            # Kolla om spelet är aktivt.
+            if self.stats.game_active:
+                # Uppdatera spelaren och hindren.
+                self.player.update()
+                self._update_obstacles()
 
             # Uppdatera skärmen.
             self._update_screen()
+
+    def _start_game(self):
+        """Startar ett ny spelomgång."""
+        self.stats.game_active = True
+
+        # Nollställ spelets statistik.
+        self.stats.reset_stats()
+        self.scoreboard.prep_score()
+
+        # Ta bort alla hinder.
+        self.obstacles.empty()
+
+        # Göm muspekaren.
+        pygame.mouse.set_visible(False)
 
     def _update_screen(self):
         """Updaterar skärmen of 'flippar' till en ny bild."""
@@ -52,6 +76,13 @@ class DuckAndJump:
         self.screen.fill(self.settings.bg_color)
         self.player.blitme()
         self.obstacles.draw(self.screen)  # Rita hela gruppen hinder.
+
+        # Rita poänginformation.
+        self.scoreboard.show_score()
+
+        # Rita 'PLAY' knappen om spelet är inaktivt..
+        if not self.stats.game_active:
+            self.play_button.draw_button()
 
         # 'Flippa' till en ny bild.
         pygame.display.flip()
@@ -80,6 +111,10 @@ class DuckAndJump:
                 # Inkrementera poängstatistiken.
                 self.stats.score += self.settings.obstacle_points
 
+        # Uppdatera poängen på 'score board'.
+        self.scoreboard.prep_score()
+        self.scoreboard.check_high_score()
+
     def _check_obstacles_collisions(self):
         """Kolla efter kollisioner mellan spelare och hinder."""
         # Skapa en lista som fylls med kolliderade objekt.
@@ -97,9 +132,12 @@ class DuckAndJump:
                 sleep(0.5)
             # Spelaren har inte liv kvar.
             else:
-                # Nollställ dynamisk spelstatistik.
-                self.stats.reset_stats()
-                sys.exit()
+                # Deaktivera spelet och återställ muspekaren.
+                self.stats.game_active = False
+                pygame.mouse.set_visible(True)
+
+                # Kolla om spelaren slagit tidigare 'high score'.
+                self.scoreboard.check_high_score()
 
     def _has_collided(self, player, obstacle):
         """
@@ -112,15 +150,27 @@ class DuckAndJump:
     def _check_events(self):
         """Kolla efter tangentbords- och mushändelser."""
         for event in pygame.event.get():
-            # Klickar kryssrutan eller anvönder genväg för att stänga fönster.
+            # Klickar kryssrutan eller använder genväg för att stänga fönster.
             if event.type == pygame.QUIT:
                 sys.exit()
+            # Inledande vänsterklick.
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                # Avgör vart muspekaren var när vänsterklick inleddes.
+                mouse_pos = pygame.mouse.get_pos()
+                self._check_play_button(mouse_pos)
 
             # Nedtryckning av tangentbordsknappar.
             elif event.type == pygame.KEYDOWN:
                 # Styrning av spelaren.
                 if event.key == pygame.K_UP:
                     self.player.jump()
+
+    def _check_play_button(self, mouse_pos):
+        """Startar ett nytt spel när 'PLAY' knappen klickas med musen."""
+        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        # Kontrollera att spelet inte redan är aktivt.
+        if button_clicked and not self.stats.game_active:
+            self._start_game()
 
 
 if __name__ == "__main__":
