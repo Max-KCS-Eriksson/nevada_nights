@@ -87,6 +87,11 @@ class DuckAndJump:
             self.stats.reset_stats()
 
     def _has_collided(self, player, obstacle):
+        """
+        Metod för att avgöra kollision mellan 'hitbox'.
+
+        Returnerar booleskt värde.
+        """
         return obstacle.hitbox.colliderect(player.hitbox)
 
     def _check_events(self):
