@@ -24,17 +24,23 @@ class Player:
         self.image_running2 = pygame.image.load("images/adventurer_action2.png")
 
         self.image = self.image_idle
-        self.rect = self.image.get_rect()  # Mät spelarens 'hitbox'.
+
+        # Mät spelarens utkant, och skapa en 'hitbox' som är mindre än utkanten.
+        self.rect = self.image.get_rect()
+        hitbox_width = self.rect.width / 2
+        hitbox_height = self.rect.height / 2
+        self.hitbox = self.rect.inflate(-hitbox_width, -hitbox_height)
 
         self._spawn()
 
     def blitme(self):
         """Ritar sig på skärmen."""
         self.screen.blit(self.image, self.rect)
+        # self.screen.fill((0, 125, 255), self.hitbox)  # NOTE Used for DEBUG only.
 
     def update(self):
         """Updaterar sin position."""
-        self.step += 1
+        self.step += 1  # TODO Find better solution.
 
         if self.is_jumping:
             self.image = self.image_jumping
@@ -54,6 +60,9 @@ class Player:
             else:
                 self.image = self.image_running2
 
+        # Centrera 'hitbox'.
+        self.hitbox.center = self.rect.center
+
     def jump(self):
         """Spelaren inleder ett hopp."""
         self.speed = self.jump_height
@@ -63,6 +72,9 @@ class Player:
         """
         Placera ut spelaren på spelskärmen.
 
-        Spelarens nedre vänsterkant placeras diktan med spelskärmens nedre vänsterkant.
+        Spelarens nedre vänsterkant placeras i spelskärmens nedre vänsterkant, med liten
+        marginal till vänster.
         """
-        self.rect.bottomleft = self.screen_rect.bottomleft
+        x = self.screen_rect.left + 100
+        y = self.screen_rect.bottom
+        self.rect.bottomleft = (x, y)
