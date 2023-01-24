@@ -164,6 +164,11 @@ class DuckAndJump:
                 # Styrning av spelaren.
                 if event.key == pygame.K_UP:
                     self.player.jump()
+                # Starta spelet.
+                if event.key == pygame.K_RETURN:
+                    # Kontrollera att spelet inte redan är aktivt.
+                    if not self.stats.game_active:
+                        self._start_game()
 
     def _check_play_button(self, mouse_pos):
         """Startar ett nytt spel när 'PLAY' knappen klickas med musen."""
