@@ -8,7 +8,7 @@ from gamestats import GameStats
 from scoreboard import Scoreboard
 from button import Button
 from player import Player
-from obstacle import GroundObstacle
+from obstacles import GroundObstacle
 
 
 class DuckAndJump:
