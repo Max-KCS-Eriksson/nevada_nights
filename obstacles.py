@@ -30,7 +30,7 @@ class GroundObstacle(BaseObstacle, Sprite):
 
         # Ladda inställningar.
         self.speed = self.settings.obstacle_speed
-        self._respawn_rate = self.settings.obstacle_respawn_rate
+        self.respawn_rate = self.settings.obstacle_respawn_rate
 
         self._spawn()
 
@@ -38,8 +38,8 @@ class GroundObstacle(BaseObstacle, Sprite):
         """
         Placera hindret utanför nedre högra hörnet av spelskärmen.
 
-        Avståndet utanför hörnet bestämms av det privata attributet _respawn_rate.
+        Avståndet utanför hörnet bestämms av attributet respawn_rate.
         """
-        # Packa upp det oföränderliga tuple-värdet och addera värdet av _respawn_rate.
+        # Packa upp det oföränderliga tuple-värdet och addera värdet av respawn_rate.
         screen_right, screen_bottom = self.screen_rect.bottomright
-        self.rect.bottomleft = (screen_right + self._respawn_rate, screen_bottom)
+        self.rect.bottomleft = (screen_right + self.respawn_rate, screen_bottom)

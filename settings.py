@@ -17,10 +17,9 @@ class Settings:
 
         # Hindrets inställningar.
         self.obstacle_speed = 1.5  # Måste vara över 1 annars kan inte x bli lägre än 0.
-        self.obstacle_respawn_rate = (
-            500  # Avstånd utanför högerkant nytt hinder skapas.
-        )
+        self.obstacle_respawn_rate = 500  # Avstånd mellan hinder.
         self.obstacle_points = 100
+        self.obstacles_per_level = 3
 
         self._create_screen()
 

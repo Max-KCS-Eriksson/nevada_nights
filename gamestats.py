@@ -14,7 +14,6 @@ class GameStats:
         self.reset_stats()
 
         self.high_score_path = Path(__file__).parent.resolve() / ".highscore.txt"
-        print(self.high_score_path)
         self.high_score = self._read_high_score()
 
         # Start spelet med inaktivt status.

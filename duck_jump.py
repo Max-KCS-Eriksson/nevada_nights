@@ -36,7 +36,6 @@ class DuckAndJump:
 
         # Skapa grupp med instanser av spelets hinder.
         self.obstacles = pygame.sprite.Group()  # Hantera en mängd hinder samtidigt.
-        self._create_obstacles()
 
         # Instansiera knapp för att starta spelet.
         self.play_button = Button(self, "PLAY")
@@ -90,8 +89,13 @@ class DuckAndJump:
 
     def _create_obstacles(self):
         """Skapa och lägg till hinder i list attributet self.obstacles."""
-        obstacle = GroundObstacle()
-        self.obstacles.add(obstacle)
+        for obstacle_number in range(self.settings.obstacles_per_level):
+            obstacle = GroundObstacle()
+            # Skapa längre distans åt höger från spelskärmens kant ju senare index i
+            # listan hindret har.
+            obstacle.rect.left += obstacle.respawn_rate * obstacle_number * 2
+
+            self.obstacles.add(obstacle)
 
     def _update_obstacles(self):
         """Uppdatera hinder."""
