@@ -54,16 +54,24 @@ class DuckAndJump:
 
         # 'Flippa' till en ny bild.
         pygame.display.flip()
-        print(self.stats.player_lives_left)
 
     def _create_obstacles(self):
+        """Skapa och lägg till hinder i list attributet self.obstacles."""
         obstacle = GroundObstacle()
         self.obstacles.add(obstacle)
 
     def _update_obstacles(self):
+        """Uppdatera hinder."""
         self.obstacles.update()
+        self._check_obstacle_off_screen()
+        self._check_obstacles_collisions()
 
-        # Kolla efter hinder som har passerat ut från spelskärmen.
+        # Skapa fler hinder om det inte finns några.
+        if not self.obstacles:
+            self._create_obstacles()
+
+    def _check_obstacle_off_screen(self):
+        """Kolla efter hinder som har passerat ut ur spelskärmen."""
         for obstacle in self.obstacles.copy():
             if obstacle.rect.right <= self.screen_rect.left:
                 # Ta bort hinderinstansen från gruppen av hinder.
@@ -71,24 +79,22 @@ class DuckAndJump:
                 # Inkrementera poängstatistiken.
                 self.stats.score += self.settings.obstacle_points
 
-        self._check_obstacles()
-
-    def _check_obstacles(self):
-        # Skapa fler hinder om det inte finns några.
-        if not self.obstacles:
-            self._create_obstacles()
-
+    def _check_obstacles_collisions(self):
+        """Kolla efter kollisioner mellan spelare och hinder."""
         # Skapa en lista som fylls med kolliderade objekt.
         collisions = pygame.sprite.spritecollide(
             self.player, self.obstacles, dokill=True, collided=self._has_collided
         )
-        # Kolla om listan inte är tom, och agera på kollision.
+
+        # Agera på kollision om listan inte är tom.
         if collisions:
             # Spelaren har liv kvar.
             if self.stats.player_lives_left > 0:
+                # Subtrahera ett liv från spelaren.
                 self.stats.player_lives_left -= 1
             # Spelaren har inte liv kvar.
             else:
+                # Nollställ dynamisk spelstatistik.
                 self.stats.reset_stats()
                 sys.exit()
 
