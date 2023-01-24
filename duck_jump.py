@@ -77,10 +77,17 @@ class DuckAndJump:
         if not self.obstacles:
             self._create_obstacles()
 
-        # Kolla efter kollision med spelaren.
-        if pygame.sprite.spritecollideany(self.player, self.obstacles):
+        # Skapa en lista som fylls med kolliderade objekt.
+        collisions = pygame.sprite.spritecollide(
+            self.player, self.obstacles, dokill=False, collided=self._has_collided
+        )
+        # Kolla om listan inte är tom.
+        if collisions:
             # Agera på kollision.
             self.stats.reset_stats()
+
+    def _has_collided(self, player, obstacle):
+        return obstacle.hitbox.colliderect(player.hitbox)
 
     def _check_events(self):
         """Kolla efter tangentbords- och mushändelser."""
