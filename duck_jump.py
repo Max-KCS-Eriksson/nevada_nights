@@ -99,8 +99,10 @@ class DuckAndJump:
         self._check_obstacle_off_screen()
         self._check_obstacles_collisions()
 
-        # Skapa fler hinder om det inte finns några.
+        # Gå till nästa nivå, och skapa fler hinder om det inte finns några.
         if not self.obstacles:
+            self.stats.level += 1
+            self.scoreboard.prep_level()
             self._create_obstacles()
 
     def _check_obstacle_off_screen(self):
@@ -128,6 +130,7 @@ class DuckAndJump:
             if self.stats.player_lives_left > 0:
                 # Subtrahera ett liv från spelaren.
                 self.stats.player_lives_left -= 1
+
                 # Uppdatera poängtavlan.
                 self.scoreboard.prep_player_lives()
 
@@ -141,6 +144,11 @@ class DuckAndJump:
 
                 # Kolla om spelaren slagit tidigare 'high score'.
                 self.scoreboard.check_high_score()
+
+                # Vög upp att nivån inkrementeras då hinder tas bort till följd av
+                # kollision.
+                self.stats.level -= 1
+                self.scoreboard.prep_level()
 
     def _has_collided(self, player, obstacle):
         """

@@ -20,6 +20,7 @@ class Scoreboard:
         self.prep_score()
         self.prep_high_score()
         self.prep_player_lives()
+        self.prep_level()
 
     def prep_score(self):
         """Formatera poängen och rendera det som en bild."""
@@ -64,7 +65,7 @@ class Scoreboard:
 
     def prep_player_lives(self):
         """Visa hur många liv spelaren har kvar."""
-        # Formatera sträng, och väg upp fär off-by-one
+        # Formatera sträng, och väg upp fär off-by-one.
         player_lives_left_str = "Lives: {}".format(self.stats.player_lives_left + 1)
 
         # Rendera stängvärde som bild.
@@ -78,8 +79,24 @@ class Scoreboard:
         # Matcha den övre marginalen med poängräkningens.
         self.player_lives_left_rect.top = self.score_rect.top
 
+    def prep_level(self):
+        """Formatera nivån och rendera det som en bild."""
+        # Formatera sträng.
+        level_str = "Level: {}".format(self.stats.level)
+
+        # Rendera stängvärde som bild.
+        self.level_image = self.font.render(
+            level_str, True, self.text_color, self.settings.bg_color
+        )
+
+        # Positionera under spelarens liv.
+        self.level_rect = self.level_image.get_rect()
+        self.level_rect.left = self.player_lives_left_rect.left
+        self.level_rect.top = self.player_lives_left_rect.bottom + 10
+
     def show_score(self):
         """Visa nuvarande poäng och 'high score'."""
         self.screen.blit(self.score_image, self.score_rect)
         self.screen.blit(self.high_score_image, self.high_score_rect)
         self.screen.blit(self.player_lives_left_image, self.player_lives_left_rect)
+        self.screen.blit(self.level_image, self.level_rect)

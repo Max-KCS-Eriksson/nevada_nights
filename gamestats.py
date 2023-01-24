@@ -24,7 +24,7 @@ class GameStats:
         """Nollställ dynamiska attribut."""
         self.player_lives_left = self.settings.player_lives_max - 1  # Off-by-one.
         self.score = 0
-        self.level = 1
+        self.level = 0  # +1 då nivån ökas för pga. inga hinder har skapats.
 
     def _read_high_score(self):
         try:
