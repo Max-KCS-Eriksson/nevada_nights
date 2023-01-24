@@ -51,7 +51,7 @@ class AbstractBaseGameElement:
 
 class BaseObstacle(AbstractBaseGameElement):
     """
-    Hanterar ett generiskt hinder och dess resurser.
+    Hanterar ett generiskt hinder, dess resurser, och dess generella beteende.
 
     Ärver metoder och attribut från abcs.AbstractBaseGameElement och utökar dess
     funktionalitet.
@@ -71,8 +71,6 @@ class BaseObstacle(AbstractBaseGameElement):
         # Ärv egenskaper.
         super().__init__()
 
-        self._spawn()
-
     def update(self):
         """
         Förflyttar sig i vänster riktning med en hastighet av "speed" attributets värde.
@@ -82,13 +80,3 @@ class BaseObstacle(AbstractBaseGameElement):
 
         # Förläng med förälderns metod.
         super().update()
-
-    def _spawn(self):
-        """
-        Placera hindret utanför nedre högra hörnet av spelskärmen.
-
-        Avståndet utanför hörnet bestämms av det privata attributet _respawn_rate.
-        """
-        # Packa upp det oföränderliga tuple-värdet och addera värdet av _respawn_rate.
-        screen_right, screen_bottom = self.screen_rect.bottomright
-        self.rect.bottomleft = (screen_right + self._respawn_rate, screen_bottom)
