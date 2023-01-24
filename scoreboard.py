@@ -37,8 +37,7 @@ class Scoreboard:
     def prep_high_score(self):
         """Formatera 'high score' och rendera det som en bild."""
         # Formatera poäng med kommateckensavskiljare för tusental.
-        high_score = round(self.stats.high_score, -1)
-        high_score_str = "{:,}".format(high_score)
+        high_score_str = "{:,}".format(self.stats.high_score)
 
         # Rendera stängvärde som bild.
         self.high_score_image = self.font.render(
@@ -54,8 +53,12 @@ class Scoreboard:
     def check_high_score(self):
         """Kontrollera om ett nytt 'high score' har satts."""
         if self.stats.score > self.stats.high_score:
+            # Sätt nuvarande poäng som 'high score'.
             self.stats.high_score = self.stats.score
             self.prep_high_score()
+
+            # Kalla på metod för att skriva 'high score' till fil.
+            self.stats.write_high_score(self.stats.high_score)
 
     def show_score(self):
         """Visa nuvarande poäng och 'high score'."""
