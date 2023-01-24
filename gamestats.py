@@ -24,6 +24,7 @@ class GameStats:
         """Nollställ dynamiska attribut."""
         self.player_lives_left = self.settings.player_lives_max - 1  # Off-by-one.
         self.score = 0
+        self.level = 1
 
     def _read_high_score(self):
         try:
