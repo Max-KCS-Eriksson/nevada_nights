@@ -11,7 +11,7 @@ class AbstractBaseGameElement:
 
     def __init__(self):
         """
-        Initierar attribut vanliga för spelelement.
+        Initierar attribut vanliga för spelelement i PyGame.
 
         Användning:
             Initiera efter att ett "image" attribut har deklarerats med
