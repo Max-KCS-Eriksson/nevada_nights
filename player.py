@@ -14,13 +14,6 @@ class Player(AbstractBaseGameElement):
 
     def __init__(self):
         """Instansiera spelaren och dennes förutsättningar."""
-        # Ladda spelarens inställningar
-        self.settings = Settings()
-        self.gravity = self.settings.player_gravity
-        self.speed = self.settings.player_speed
-        self.jump_height = self.settings.player_jump_height
-        self.is_jumping = False  # Flaggvariabel för att påbörja ett hopp.
-        self.step = 0  # Används för att alternera image_running1 och image_running2.
 
         # Ladda spelarens bilder.
         self.image_idle = pygame.image.load("images/adventurer_idle.png")
@@ -32,6 +25,13 @@ class Player(AbstractBaseGameElement):
 
         # Ärv egenskaper.
         super().__init__()
+
+        # Ladda spelarens inställningar
+        self.gravity = self.settings.player_gravity
+        self.speed = self.settings.player_speed
+        self.jump_height = self.settings.player_jump_height
+        self.is_jumping = False  # Flaggvariabel för att påbörja ett hopp.
+        self.step = 0  # Används för att alternera image_running1 och image_running2.
 
         self._spawn()
 
