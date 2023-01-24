@@ -54,6 +54,7 @@ class DuckAndJump:
 
         # 'Flippa' till en ny bild.
         pygame.display.flip()
+        print(self.stats.player_lives_left)
 
     def _create_obstacles(self):
         obstacle = GroundObstacle()
@@ -79,12 +80,17 @@ class DuckAndJump:
 
         # Skapa en lista som fylls med kolliderade objekt.
         collisions = pygame.sprite.spritecollide(
-            self.player, self.obstacles, dokill=False, collided=self._has_collided
+            self.player, self.obstacles, dokill=True, collided=self._has_collided
         )
-        # Kolla om listan inte är tom.
+        # Kolla om listan inte är tom, och agera på kollision.
         if collisions:
-            # Agera på kollision.
-            self.stats.reset_stats()
+            # Spelaren har liv kvar.
+            if self.stats.player_lives_left > 0:
+                self.stats.player_lives_left -= 1
+            # Spelaren har inte liv kvar.
+            else:
+                self.stats.reset_stats()
+                sys.exit()
 
     def _has_collided(self, player, obstacle):
         """
