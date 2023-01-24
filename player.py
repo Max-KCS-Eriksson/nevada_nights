@@ -15,10 +15,10 @@ class Player(AbstractBaseGameElement):
         """Instansiera spelaren och dennes förutsättningar."""
 
         # Ladda spelarens bilder.
-        self.image_idle = pygame.image.load("images/adventurer_idle.png")
-        self.image_jumping = pygame.image.load("images/adventurer_jump.png")
-        self.image_running1 = pygame.image.load("images/adventurer_action1.png")
-        self.image_running2 = pygame.image.load("images/adventurer_action2.png")
+        self.image_idle = pygame.image.load("assets/adventurer_idle.png")
+        self.image_jumping = pygame.image.load("assets/adventurer_jump.png")
+        self.image_running1 = pygame.image.load("assets/adventurer_action1.png")
+        self.image_running2 = pygame.image.load("assets/adventurer_action2.png")
 
         self.image = self.image_idle
 

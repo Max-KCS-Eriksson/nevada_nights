@@ -19,7 +19,7 @@ class GroundObstacle(BaseObstacle, Sprite):
         Åkallar båda föräldrarnas __init__() metoder.
         """
         # Ladda hindrets bild.
-        self.image = pygame.image.load("images/cactus.png")
+        self.image = pygame.image.load("assets/cactus.png")
 
         # Kalla på båda förälderklassers __init__() metod.
         # Viktigt få om "super().__init__()" används så åkallas endast den förstnämnde
