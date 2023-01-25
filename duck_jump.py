@@ -213,9 +213,9 @@ class DuckAndJump:
                 if event.key == pygame.K_DOWN:
                     self.player.is_crouching = False
 
-    def _check_play_button(self, mouse_pos):
+    def _check_play_button(self, mouse_position):
         """Startar ett nytt spel när 'PLAY' knappen klickas med musen."""
-        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        button_clicked = self.play_button.rect.collidepoint(mouse_position)
         # Kontrollera att spelet inte redan är aktivt.
         if button_clicked and not self.stats.game_active:
             self._start_game()
