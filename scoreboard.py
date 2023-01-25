@@ -94,8 +94,15 @@ class Scoreboard:
         self.level_rect.left = self.player_lives_left_rect.left
         self.level_rect.top = self.player_lives_left_rect.bottom + 10
 
+    def prep_all(self):
+        """Formatera alla poäng och rendera det som en bild."""
+        self.prep_score()
+        self.prep_high_score()
+        self.prep_player_lives()
+        self.prep_level()
+
     def show_score(self):
-        """Visa nuvarande poäng och 'high score'."""
+        """Rita upp alla poängtavlor."""
         self.screen.blit(self.score_image, self.score_rect)
         self.screen.blit(self.high_score_image, self.high_score_rect)
         self.screen.blit(self.player_lives_left_image, self.player_lives_left_rect)

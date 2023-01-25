@@ -131,6 +131,8 @@ class DuckAndJump:
             # Öka hastigheten, och poäng per hinder för var femte nivå.
         if self.stats.level % 5 == 0:
             self.settings.increase_obstacle_difficulty()
+            # Uppdatera alla poängtavlor med korrekt bakgrundsfärg.
+            self.scoreboard.prep_all()
 
         self._create_obstacles()
 
