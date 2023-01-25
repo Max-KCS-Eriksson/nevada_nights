@@ -91,10 +91,17 @@ class DuckAndJump:
         """Skapa och lägg till hinder i list attributet self.obstacles."""
         for obstacle_number in range(self.settings.obstacles_per_level):
             # Avgör vilket typ av hinder som ska läggas till.
-            if obstacle_number % 2 == 0:
-                obstacle = GroundObstacle()
-            else:
+            obstacle = GroundObstacle()  # Utgå från markhinder.
+
+            # Byt fler och fler till lufthinder ju högre nivåer.
+            if self.stats.level % 4 == 0:
                 obstacle = AirObstacle()
+            elif self.stats.level % 3 == 0:
+                if obstacle_number % 2 == 0:
+                    obstacle = AirObstacle()
+            elif self.stats.level % 2 == 0:
+                if obstacle_number % 2 != 0:
+                    obstacle = AirObstacle()
 
             # Skapa längre distans åt höger från spelskärmens kant ju senare index i
             # listan hindret har.
