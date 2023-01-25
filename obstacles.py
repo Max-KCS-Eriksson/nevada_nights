@@ -1,6 +1,11 @@
+from pathlib import Path
+
 import pygame
 
 from abcs import BaseObstacle
+
+
+ASSETS_PATH = Path(__file__).parent.resolve() / "assets"
 
 
 class GroundObstacle(BaseObstacle):
@@ -12,7 +17,7 @@ class GroundObstacle(BaseObstacle):
         förutsättningar.
         """
         # Ladda hindrets bild.
-        self.image = pygame.image.load("assets/cactus.png")
+        self.image = pygame.image.load(ASSETS_PATH / "cactus.png")
 
         # Ärv attribut och metoder.
         super().__init__()

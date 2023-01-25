@@ -1,6 +1,11 @@
+from pathlib import Path
+
 import pygame
 
 from abcs import AbstractBaseGameElement
+
+
+ASSETS_PATH = Path(__file__).parent.resolve() / "assets"
 
 
 class Player(AbstractBaseGameElement):
@@ -15,11 +20,11 @@ class Player(AbstractBaseGameElement):
         """Instansiera spelaren och dennes förutsättningar."""
 
         # Ladda spelarens bilder.
-        self._image_idle = pygame.image.load("assets/adventurer_idle.png")
-        self._image_jumping = pygame.image.load("assets/adventurer_jump.png")
-        self._image_running1 = pygame.image.load("assets/adventurer_action1.png")
-        self._image_running2 = pygame.image.load("assets/adventurer_action2.png")
-        self._image_crouching = pygame.image.load("assets/adventurer_duck.png")
+        self._image_idle = pygame.image.load(ASSETS_PATH / "adventurer_idle.png")
+        self._image_jumping = pygame.image.load(ASSETS_PATH / "adventurer_jump.png")
+        self._image_running1 = pygame.image.load(ASSETS_PATH / "adventurer_action1.png")
+        self._image_running2 = pygame.image.load(ASSETS_PATH / "adventurer_action2.png")
+        self._image_crouching = pygame.image.load(ASSETS_PATH / "adventurer_duck.png")
 
         self.image = self._image_idle
 
