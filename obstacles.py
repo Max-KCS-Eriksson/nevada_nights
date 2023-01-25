@@ -11,7 +11,7 @@ ASSETS_PATH = Path(__file__).parent.resolve() / "assets"
 class GroundObstacle(BaseObstacle):
     """Ett hinder på marken som ärver metoder från abcs.BaseObstacle och Sprite-klassen."""
 
-    def __init__(self):
+    def __init__(self, game):
         """
         Instansiera hindret med ärvda metoder från förälderklassen, samt hindrets
         förutsättningar.
@@ -20,7 +20,7 @@ class GroundObstacle(BaseObstacle):
         self.image = pygame.image.load(ASSETS_PATH / "cactus.png")
 
         # Ärv attribut och metoder.
-        super().__init__()
+        super().__init__(game)
 
         # Ladda inställningar.
         self.speed = self.settings.obstacle_speed
@@ -42,7 +42,7 @@ class GroundObstacle(BaseObstacle):
 class AirObstacle(BaseObstacle):
     """Ett hinder i luften som ärver metoder från abcs.BaseObstacle och Sprite-klassen."""
 
-    def __init__(self):
+    def __init__(self, game):
         """
         Instansiera hindret med ärvda metoder från förälderklassen, samt hindrets
         förutsättningar.
@@ -51,7 +51,7 @@ class AirObstacle(BaseObstacle):
         self.image = pygame.image.load("assets/alien.png")
 
         # Ärv attribut och metoder.
-        super().__init__()
+        super().__init__(game)
 
         # Ladda inställningar.
         self.speed = self.settings.obstacle_speed

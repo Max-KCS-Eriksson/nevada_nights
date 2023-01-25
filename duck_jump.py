@@ -32,7 +32,7 @@ class DuckAndJump:
         self.scoreboard.prep_score()
 
         # Instansiera spelets spelare.
-        self.player = Player()
+        self.player = Player(self)
 
         # Skapa grupp med instanser av spelets hinder.
         self.obstacles = pygame.sprite.Group()  # Hantera en mängd hinder samtidigt.
@@ -91,15 +91,15 @@ class DuckAndJump:
         """Skapa och lägg till hinder i list attributet self.obstacles."""
         for obstacle_number in range(self.settings.obstacles_per_level):
             # Avgör vilket typ av hinder som ska läggas till.
-            obstacle = GroundObstacle()  # Utgå från markhinder.
+            obstacle = GroundObstacle(self)  # Utgå från markhinder.
 
             # Byt fler och fler till lufthinder ju högre nivåer.
             if self.stats.level % 3 == 0:
                 if obstacle_number % 2 == 0:
-                    obstacle = AirObstacle()
+                    obstacle = AirObstacle(self)
             elif self.stats.level % 2 == 0:
                 if obstacle_number % 2 != 0:
-                    obstacle = AirObstacle()
+                    obstacle = AirObstacle(self)
 
             # Skapa längre distans åt höger från spelskärmens kant ju senare index i
             # listan hindret har.

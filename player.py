@@ -16,7 +16,7 @@ class Player(AbstractBaseGameElement):
     funktionalitet.
     """
 
-    def __init__(self):
+    def __init__(self, game):
         """Instansiera spelaren och dennes förutsättningar."""
 
         # Ladda spelarens bilder.
@@ -29,7 +29,7 @@ class Player(AbstractBaseGameElement):
         self.image = self._image_idle
 
         # Ärv egenskaper.
-        super().__init__()
+        super().__init__(game)
 
         # Ladda spelarens inställningar.
         self.gravity = self.settings.player_gravity

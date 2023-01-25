@@ -13,7 +13,7 @@ class AbstractBaseGameElement:
     ärva från denna klass.
     """
 
-    def __init__(self):
+    def __init__(self, game):
         """
         Initierar attribut vanliga för spelelement i PyGame.
 
@@ -23,8 +23,8 @@ class AbstractBaseGameElement:
             från "image" attributets ".get_rect()" metod.
             Deklarera specifika inställnings attribut efter super().__init__().
         """
-        # Ladda inställningar.
-        self.settings = Settings()
+        # Ladda spelets inställningar.
+        self.settings = game.settings
 
         # Spelplanens gränser.
         self.screen = self.settings.screen
@@ -59,7 +59,7 @@ class BaseObstacle(AbstractBaseGameElement, Sprite):
     funktionalitet.
     """
 
-    def __init__(self):
+    def __init__(self, game):
         """
         Instansiera hindret och dennes förutsättningar.
 
@@ -80,7 +80,7 @@ class BaseObstacle(AbstractBaseGameElement, Sprite):
         # Viktigt få om "super().__init__()" används så åkallas endast den förstnämnde
         # förälderns metod om båda klasser har metoder med samma namn.
         # Detta pga MRO (Method Resolution Order) i Python.
-        AbstractBaseGameElement.__init__(self)
+        AbstractBaseGameElement.__init__(self, game)
         Sprite.__init__(self)
 
     def update(self):
