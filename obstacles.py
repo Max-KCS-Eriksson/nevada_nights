@@ -48,7 +48,7 @@ class AirObstacle(BaseObstacle):
         förutsättningar.
         """
         # Ladda hindrets bild.
-        self.image = pygame.image.load("assets/alien.png")
+        self.image = pygame.image.load("assets/alien_green.png")
 
         # Ärv attribut och metoder.
         super().__init__(game)
