@@ -61,5 +61,26 @@ class AirObstacle(BaseObstacle):
         Avståndet utanför hörnet bestämms av attributet respawn_rate.
         """
         # Packa upp det oföränderliga tuple-värdet och addera värdet av respawn_rate.
-        screen_right, screen_top = self.screen_rect.topright
-        self.rect.topleft = (screen_right + self.respawn_rate, screen_top)
+        screen_right, screen_bottom = self.screen_rect.bottomright
+
+        # Hur högt över marken som toppen av spelarens hitbox är utan att ducka.
+        player_hitbox_top = 82
+
+        self.rect.bottomleft = (
+            screen_right + self.respawn_rate,
+            # Flyg på en höjd av 95% av player_hitbox_top för att krocka med spelare.
+            screen_bottom - player_hitbox_top * 0.95,
+        )
+
+    def update(self):
+        """
+        Skriv över ärvt beteende att centrera 'hitbox' i sin rect.
+
+        Nedre kanten av 'hitbox' sätt mot nedre kanten av rect, vilket skapar en lägre
+        kollisionsyta passande för ett hinder som spelaren ska ducka under.
+        """
+        # Åkalla förälderns metod.
+        super().update()
+
+        # Skriv över positioneringen av 'hitbox'.
+        self.hitbox.bottom = self.rect.bottom
