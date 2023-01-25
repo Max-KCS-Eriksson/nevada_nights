@@ -88,8 +88,10 @@ class Player(AbstractBaseGameElement):
 
     def jump(self):
         """Spelaren inleder ett hopp."""
-        self.speed = self.jump_height
-        self.is_jumping = True
+        # Tillåt inte dubbelhopp.
+        if not self.is_jumping:
+            self.speed = self.jump_height
+            self.is_jumping = True
 
     def crouch(self):
         """Spelaren hukar sig."""
