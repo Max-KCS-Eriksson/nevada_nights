@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pygame
 
-from abcs import AbstractBaseGameElement
+from base_classes import AbstractBaseGameElement
 
 
 ASSETS_PATH = Path(__file__).parent.resolve() / "assets"

@@ -1,8 +1,6 @@
-"""En modul för abstrakta classer."""
+"""En modul för abstrakta klasser."""
 
 from pygame.sprite import Sprite
-
-from settings import Settings
 
 
 class AbstractBaseGameElement:
