@@ -1,5 +1,7 @@
 """En modul för abstrakta classer."""
 
+from pygame.sprite import Sprite
+
 from settings import Settings
 
 
@@ -37,7 +39,7 @@ class AbstractBaseGameElement:
     def blitme(self):
         """Ritar sig på skärmen."""
         self.screen.blit(self.image, self.rect)
-        # self.screen.fill((0, 125, 255), self.hitbox)  # NOTE Used for DEBUG only.
+        self.screen.fill((0, 125, 255), self.hitbox)  # NOTE Used for DEBUG only.
 
     def update(self):
         """
@@ -49,7 +51,7 @@ class AbstractBaseGameElement:
         self.hitbox.center = self.rect.center
 
 
-class BaseObstacle(AbstractBaseGameElement):
+class BaseObstacle(AbstractBaseGameElement, Sprite):
     """
     Hanterar ett generiskt hinder, dess resurser, och dess generella beteende.
 
@@ -61,6 +63,12 @@ class BaseObstacle(AbstractBaseGameElement):
         """
         Instansiera hindret och dennes förutsättningar.
 
+        De ärvda metoderna möjliggör att instanser av klassen kan hanteras i "sprit.Group",
+        som är ett listliknande objekt med metoder för att hantera flera tillgångar
+        samtidigt, samt använda metoder från AbstractBaseGameElement.
+
+        Åkallar båda föräldrarnas __init__() metoder.
+
         Användning:
             Initiera efter att ett "image" attribut har deklarerats med
             "pygame.image.load()" som värde. Detta då attributet "rect" får sitt värde
@@ -68,8 +76,12 @@ class BaseObstacle(AbstractBaseGameElement):
             Ett "speed" attribut med ett numeriskt värde >= 1 måste deklareras då detta
             attribut används i .update() metoden.
         """
-        # Ärv egenskaper.
-        super().__init__()
+        # Kalla på båda förälderklassers __init__() metod.
+        # Viktigt få om "super().__init__()" används så åkallas endast den förstnämnde
+        # förälderns metod om båda klasser har metoder med samma namn.
+        # Detta pga MRO (Method Resolution Order) i Python.
+        AbstractBaseGameElement.__init__(self)
+        Sprite.__init__(self)
 
     def update(self):
         """

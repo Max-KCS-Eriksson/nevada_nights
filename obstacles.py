@@ -1,32 +1,21 @@
 import pygame
-from pygame.sprite import Sprite
 
 from abcs import BaseObstacle
 
 
-class GroundObstacle(BaseObstacle, Sprite):
+class GroundObstacle(BaseObstacle):
     """Ett hinder på marken som ärver metoder från abcs.BaseObstacle och Sprite-klassen."""
 
     def __init__(self):
         """
         Instansiera hindret med ärvda metoder från förälderklassen, samt hindrets
         förutsättningar.
-
-        De ärvda metoderna möjliggör att instanser av klassen kan hanteras i "sprit.Group",
-        som är ett listliknande objekt med metoder för att hantera flera tillgångar
-        samtidigt.
-
-        Åkallar båda föräldrarnas __init__() metoder.
         """
         # Ladda hindrets bild.
         self.image = pygame.image.load("assets/cactus.png")
 
-        # Kalla på båda förälderklassers __init__() metod.
-        # Viktigt få om "super().__init__()" används så åkallas endast den förstnämnde
-        # förälderns metod om båda klasser har metoder med samma namn.
-        # Detta pga MRO (Method Resolution Order) i Python.
-        BaseObstacle.__init__(self)
-        Sprite.__init__(self)
+        # Ärv attribut och metoder.
+        super().__init__()
 
         # Ladda inställningar.
         self.speed = self.settings.obstacle_speed
@@ -45,29 +34,19 @@ class GroundObstacle(BaseObstacle, Sprite):
         self.rect.bottomleft = (screen_right + self.respawn_rate, screen_bottom)
 
 
-class AirObstacle(BaseObstacle, Sprite):
+class AirObstacle(BaseObstacle):
     """Ett hinder i luften som ärver metoder från abcs.BaseObstacle och Sprite-klassen."""
 
     def __init__(self):
         """
         Instansiera hindret med ärvda metoder från förälderklassen, samt hindrets
         förutsättningar.
-
-        De ärvda metoderna möjliggör att instanser av klassen kan hanteras i "sprit.Group",
-        som är ett listliknande objekt med metoder för att hantera flera tillgångar
-        samtidigt.
-
-        Åkallar båda föräldrarnas __init__() metoder.
         """
         # Ladda hindrets bild.
         self.image = pygame.image.load("assets/alien.png")
 
-        # Kalla på båda förälderklassers __init__() metod.
-        # Viktigt få om "super().__init__()" används så åkallas endast den förstnämnde
-        # förälderns metod om båda klasser har metoder med samma namn.
-        # Detta pga MRO (Method Resolution Order) i Python.
-        BaseObstacle.__init__(self)
-        Sprite.__init__(self)
+        # Ärv attribut och metoder.
+        super().__init__()
 
         # Ladda inställningar.
         self.speed = self.settings.obstacle_speed
