@@ -1,4 +1,5 @@
 from pathlib import Path
+import random
 
 import pygame
 
@@ -48,7 +49,22 @@ class AirObstacle(BaseObstacle):
         förutsättningar.
         """
         # Ladda hindrets bild.
-        self.image = pygame.image.load("assets/alien_green.png")
+        self._image_alien_beige = pygame.image.load(ASSETS_PATH / "alien_beige.png")
+        self._image_alien_blue = pygame.image.load(ASSETS_PATH / "alien_blue.png")
+        self._image_alien_green = pygame.image.load(ASSETS_PATH / "alien_green.png")
+        self._image_alien_pink = pygame.image.load(ASSETS_PATH / "alien_pink.png")
+        self._image_alien_yellow = pygame.image.load(ASSETS_PATH / "alien_yellow.png")
+
+        # Tilldela en slumpmässig bild.
+        self.image = random.choice(
+            [
+                self._image_alien_beige,
+                self._image_alien_blue,
+                self._image_alien_green,
+                self._image_alien_pink,
+                self._image_alien_yellow,
+            ]
+        )
 
         # Ärv attribut och metoder.
         super().__init__(game)
