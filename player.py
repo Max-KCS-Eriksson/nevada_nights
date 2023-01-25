@@ -84,7 +84,7 @@ class Player(AbstractBaseGameElement):
             # Sänk spelaren 'hitbox' för att ta sig under hinder.
             # Hur högt över marken som toppen av spelarens hitbox är utan att ducka.
             player_hitbox_top = 82
-            self.hitbox.top = self.screen_rect.bottom - player_hitbox_top * 0.6
+            self.hitbox.top = self.rect.bottom - player_hitbox_top * 0.6
 
     def jump(self):
         """Spelaren inleder ett hopp."""
