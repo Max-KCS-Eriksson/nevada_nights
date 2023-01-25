@@ -59,10 +59,11 @@ class DuckAndJump:
         """Startar ett ny spelomgång."""
         self.stats.game_active = True
 
-        # Nollställ spelets statistik.
+        # Nollställ spelets statistik och dynamiska inställningar.
         self.stats.reset_stats()
         self.scoreboard.prep_score()
         self.scoreboard.prep_player_lives()
+        self.settings.initialize_dynamic_settings()
 
         # Ta bort alla hinder.
         self.obstacles.empty()
@@ -126,12 +127,10 @@ class DuckAndJump:
 
         # Utöka mängden hinder för var fjärde nivå.
         if self.stats.level % 4 == 0:
-            self.settings.obstacles_per_level += 2
-
-            # Öka hastigheten med 20%, och poäng per hinder med 50% för var femte nivå.
+            self.settings.increase_obstacles_per_level()
+            # Öka hastigheten, och poäng per hinder för var femte nivå.
         if self.stats.level % 5 == 0:
-            self.settings.obstacle_speed *= 1.2
-            self.settings.obstacle_points += int(self.settings.obstacle_points / 2)
+            self.settings.increase_obstacle_difficulty()
 
         self._create_obstacles()
 
