@@ -115,21 +115,25 @@ class DuckAndJump:
         self._check_obstacle_off_screen()
         self._check_obstacles_collisions()
 
-        # Gå till nästa nivå, och skapa hinder om det inte finns några.
+        # Kolla om alla hinder är borta.
         if not self.obstacles:
-            self.stats.level += 1
-            self.scoreboard.prep_level()
+            self._next_level()
 
-            # Utöka mängden hinder för var fjärde nivå.
-            if self.stats.level % 4 == 0:
-                self.settings.obstacles_per_level += 2
+    def _next_level(self):
+        """Öka spelets nivå."""
+        self.stats.level += 1
+        self.scoreboard.prep_level()
+
+        # Utöka mängden hinder för var fjärde nivå.
+        if self.stats.level % 4 == 0:
+            self.settings.obstacles_per_level += 2
 
             # Öka hastigheten med 20%, och poäng per hinder med 50% för var femte nivå.
-            if self.stats.level % 5 == 0:
-                self.settings.obstacle_speed *= 1.2
-                self.settings.obstacle_points += int(self.settings.obstacle_points / 2)
+        if self.stats.level % 5 == 0:
+            self.settings.obstacle_speed *= 1.2
+            self.settings.obstacle_points += int(self.settings.obstacle_points / 2)
 
-            self._create_obstacles()
+        self._create_obstacles()
 
     def _check_obstacle_off_screen(self):
         """Kolla efter hinder som har passerat ut ur spelskärmen."""
