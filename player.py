@@ -15,12 +15,13 @@ class Player(AbstractBaseGameElement):
         """Instansiera spelaren och dennes förutsättningar."""
 
         # Ladda spelarens bilder.
-        self.image_idle = pygame.image.load("assets/adventurer_idle.png")
-        self.image_jumping = pygame.image.load("assets/adventurer_jump.png")
-        self.image_running1 = pygame.image.load("assets/adventurer_action1.png")
-        self.image_running2 = pygame.image.load("assets/adventurer_action2.png")
+        self._image_idle = pygame.image.load("assets/adventurer_idle.png")
+        self._image_jumping = pygame.image.load("assets/adventurer_jump.png")
+        self._image_running1 = pygame.image.load("assets/adventurer_action1.png")
+        self._image_running2 = pygame.image.load("assets/adventurer_action2.png")
+        self._image_crouching = pygame.image.load("assets/adventurer_duck.png")
 
-        self.image = self.image_idle
+        self.image = self._image_idle
 
         # Ärv egenskaper.
         super().__init__()
@@ -29,17 +30,21 @@ class Player(AbstractBaseGameElement):
         self.gravity = self.settings.player_gravity
         self.speed = self.settings.player_speed
         self.jump_height = self.settings.player_jump_height
-        self.is_jumping = False  # Flaggvariabel för att påbörja ett hopp.
-        self.step = 0  # Används för att alternera image_running1 och image_running2.
+
+        # Flaggvariabel för spelarens rörelser.
+        self.is_jumping = False
+        self.is_crouching = False
+
+        self.step = 0  # Används för att alternera _image_running1 och _image_running2.
 
         self._spawn()
 
     def update(self):
-        """Uppdaterar sin position."""
+        """Uppdaterar sin position och animation."""
         self.step += 1
 
         if self.is_jumping:
-            self.image = self.image_jumping
+            self.image = self._image_jumping
 
             # Öka fallets hastighet tills att marken är nådd.
             self.rect.y += self.speed
@@ -47,22 +52,34 @@ class Player(AbstractBaseGameElement):
             if self.rect.bottom >= self.screen_rect.bottom:
                 self.speed = 0
                 self.is_jumping = False
-                self.image = self.image_running1
-                # Se till att spelaren inte hamnar under marken..s
+                # Se till att spelaren inte hamnar under marken.
                 self._spawn()
         else:
             if self.step % 2 == 0:
-                self.image = self.image_running1
+                self.image = self._image_running1
             else:
-                self.image = self.image_running2
+                self.image = self._image_running2
 
         # Förläng med förälderns metod.
         super().update()
+
+        # Måste vara efter super().update() för att ändra positionering av 'hitbox'.
+        if self.is_crouching:
+            self.image = self._image_crouching
+
+            # Sänk spelaren 'hitbox' för att ta sig under hinder.
+            # Hur högt över marken som toppen av spelarens hitbox är utan att ducka.
+            player_hitbox_top = 82
+            self.hitbox.top = self.screen_rect.bottom - player_hitbox_top * 0.6
 
     def jump(self):
         """Spelaren inleder ett hopp."""
         self.speed = self.jump_height
         self.is_jumping = True
+
+    def crouch(self):
+        """Spelaren hukar sig."""
+        self.is_crouching = True
 
     def _spawn(self):
         """

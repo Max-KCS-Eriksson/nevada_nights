@@ -181,14 +181,20 @@ class DuckAndJump:
 
             # Nedtryckning av tangentbordsknappar.
             elif event.type == pygame.KEYDOWN:
-                # Styrning av spelaren.
-                if event.key == pygame.K_UP:
-                    self.player.jump()
                 # Starta spelet.
                 if event.key == pygame.K_RETURN:
                     # Kontrollera att spelet inte redan är aktivt.
                     if not self.stats.game_active:
                         self._start_game()
+                # Styrning av spelaren.
+                if event.key == pygame.K_UP:
+                    self.player.jump()
+                if event.key == pygame.K_DOWN:
+                    self.player.crouch()
+
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_DOWN:
+                    self.player.is_crouching = False
 
     def _check_play_button(self, mouse_pos):
         """Startar ett nytt spel när 'PLAY' knappen klickas med musen."""
