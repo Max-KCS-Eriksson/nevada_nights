@@ -107,8 +107,6 @@ class DuckAndJump:
                 self.settings.obstacle_spawn_distance * obstacle_number * 2
             )
 
-            # Uppdatera hindrets hastighet efter senaste inställningar.
-            obstacle.speed = self.settings.obstacle_speed
             self.obstacles.add(obstacle)
 
     def _update_obstacles(self):
