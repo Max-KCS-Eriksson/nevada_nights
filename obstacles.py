@@ -19,7 +19,7 @@ class GroundObstacle(BaseObstacle):
 
         # Ladda inställningar.
         self.speed = self.settings.obstacle_speed
-        self.respawn_rate = self.settings.obstacle_respawn_rate
+        self.spawn_distance = self.settings.obstacle_spawn_distance
 
         self._spawn()
 
@@ -27,11 +27,11 @@ class GroundObstacle(BaseObstacle):
         """
         Placera hindret utanför nedre högra hörnet av spelskärmen.
 
-        Avståndet utanför hörnet bestämms av attributet respawn_rate.
+        Avståndet utanför hörnet bestämms av attributet spawn_distance.
         """
-        # Packa upp det oföränderliga tuple-värdet och addera värdet av respawn_rate.
+        # Packa upp det oföränderliga tuple-värdet och addera värdet av spawn_distance.
         screen_right, screen_bottom = self.screen_rect.bottomright
-        self.rect.bottomleft = (screen_right + self.respawn_rate, screen_bottom)
+        self.rect.bottomleft = (screen_right + self.spawn_distance, screen_bottom)
 
 
 class AirObstacle(BaseObstacle):
@@ -50,7 +50,7 @@ class AirObstacle(BaseObstacle):
 
         # Ladda inställningar.
         self.speed = self.settings.obstacle_speed
-        self.respawn_rate = self.settings.obstacle_respawn_rate
+        self.spawn_distance = self.settings.obstacle_spawn_distance
 
         self._spawn()
 
@@ -58,16 +58,16 @@ class AirObstacle(BaseObstacle):
         """
         Placera hindret i luften.
 
-        Avståndet utanför hörnet bestämms av attributet respawn_rate.
+        Avståndet utanför hörnet bestämms av attributet spawn_distance.
         """
-        # Packa upp det oföränderliga tuple-värdet och addera värdet av respawn_rate.
+        # Packa upp det oföränderliga tuple-värdet och addera värdet av spawn_distance.
         screen_right, screen_bottom = self.screen_rect.bottomright
 
         # Hur högt över marken som toppen av spelarens hitbox är utan att ducka.
         player_hitbox_top = 82
 
         self.rect.bottomleft = (
-            screen_right + self.respawn_rate,
+            screen_right + self.spawn_distance,
             # Flyg på en höjd av 95% av player_hitbox_top för att krocka med spelare.
             screen_bottom - player_hitbox_top * 0.95,
         )

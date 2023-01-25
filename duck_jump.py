@@ -94,9 +94,7 @@ class DuckAndJump:
             obstacle = GroundObstacle()  # Utgå från markhinder.
 
             # Byt fler och fler till lufthinder ju högre nivåer.
-            if self.stats.level % 4 == 0:
-                obstacle = AirObstacle()
-            elif self.stats.level % 3 == 0:
+            if self.stats.level % 3 == 0:
                 if obstacle_number % 2 == 0:
                     obstacle = AirObstacle()
             elif self.stats.level % 2 == 0:
@@ -105,8 +103,12 @@ class DuckAndJump:
 
             # Skapa längre distans åt höger från spelskärmens kant ju senare index i
             # listan hindret har.
-            obstacle.rect.left += obstacle.respawn_rate * obstacle_number * 2
+            obstacle.rect.left += (
+                self.settings.obstacle_spawn_distance * obstacle_number * 2
+            )
 
+            # Uppdatera hindrets hastighet efter senaste inställningar.
+            obstacle.speed = self.settings.obstacle_speed
             self.obstacles.add(obstacle)
 
     def _update_obstacles(self):
@@ -115,10 +117,20 @@ class DuckAndJump:
         self._check_obstacle_off_screen()
         self._check_obstacles_collisions()
 
-        # Gå till nästa nivå, och skapa fler hinder om det inte finns några.
+        # Gå till nästa nivå, och skapa hinder om det inte finns några.
         if not self.obstacles:
             self.stats.level += 1
             self.scoreboard.prep_level()
+
+            # Utöka mängden hinder för var fjärde nivå.
+            if self.stats.level % 4 == 0:
+                self.settings.obstacles_per_level += 2
+
+            # Öka hastigheten med 20%, och poäng per hinder med 50% för var femte nivå.
+            if self.stats.level % 5 == 0:
+                self.settings.obstacle_speed *= 1.2
+                self.settings.obstacle_points += int(self.settings.obstacle_points / 2)
+
             self._create_obstacles()
 
     def _check_obstacle_off_screen(self):
