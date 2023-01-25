@@ -40,15 +40,28 @@ class Player(AbstractBaseGameElement):
         self.is_jumping = False
         self.is_crouching = False
 
-        self.step = 0  # Används för att alternera _image_running1 och _image_running2.
+        self._step = 0  # Används för att alternera _image_running1 och _image_running2.
 
         self._spawn()
 
     def update(self):
         """Uppdaterar sin position och animation."""
-        self.step += 1
+        if self._step == 80:
+            # Låt inte överstiga 79.
+            self._step = 0
+        else:
+            # Inkrementera om under 80.
+            self._step += 1
 
-        if self.is_jumping:
+        # Spelaren går.
+        if not self.is_jumping:
+            # Byt bild var 40e steg.
+            if self._step < 40:
+                self.image = self._image_running1
+            else:
+                self.image = self._image_running2
+        # Spelaren hoppar.
+        else:
             self.image = self._image_jumping
 
             # Öka fallets hastighet tills att marken är nådd.
@@ -59,15 +72,11 @@ class Player(AbstractBaseGameElement):
                 self.is_jumping = False
                 # Se till att spelaren inte hamnar under marken.
                 self._spawn()
-        else:
-            if self.step % 2 == 0:
-                self.image = self._image_running1
-            else:
-                self.image = self._image_running2
 
         # Förläng med förälderns metod.
         super().update()
 
+        # Spelaren kryper.
         # Måste vara efter super().update() för att ändra positionering av 'hitbox'.
         if self.is_crouching:
             self.image = self._image_crouching
